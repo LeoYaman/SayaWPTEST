@@ -392,9 +392,30 @@ window.addEventListener("scroll", () => {
   }
 })
 
-// Mobile menu toggle
+// Mobile menu toggle (body scroll lock only when viewport is mobile)
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 768px)").matches
+}
+
+function closeMobileMenu() {
+  navMenu.classList.remove("active")
+  document.body.classList.remove("menu-open")
+  const spans = mobileMenuBtn.querySelectorAll("span")
+  spans[0].style.transform = "rotate(0) translateY(0)"
+  spans[1].style.opacity = "1"
+  spans[2].style.transform = "rotate(0) translateY(0)"
+}
+
 mobileMenuBtn.addEventListener("click", () => {
   navMenu.classList.toggle("active")
+
+  if (isMobileViewport()) {
+    if (navMenu.classList.contains("active")) {
+      document.body.classList.add("menu-open")
+    } else {
+      document.body.classList.remove("menu-open")
+    }
+  }
 
   // Animate hamburger menu
   const spans = mobileMenuBtn.querySelectorAll("span")
@@ -410,12 +431,15 @@ mobileMenuBtn.addEventListener("click", () => {
 // Close mobile menu when clicking a link
 navMenu.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", () => {
-    navMenu.classList.remove("active")
-    const spans = mobileMenuBtn.querySelectorAll("span")
-    spans[0].style.transform = "rotate(0) translateY(0)"
-    spans[1].style.opacity = "1"
-    spans[2].style.transform = "rotate(0) translateY(0)"
+    closeMobileMenu()
   })
+})
+
+// On resize: remove menu-open if we're no longer in mobile view (desktop doesn't use body lock)
+window.addEventListener("resize", () => {
+  if (!isMobileViewport()) {
+    document.body.classList.remove("menu-open")
+  }
 })
 
 // Smooth scrolling for anchor links (skip language toggle)
