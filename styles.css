@@ -84,6 +84,18 @@ body {
     justify-content: space-between;
     align-items: center;
   }
+
+  .nav-end {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
   
 .logo {
     display: flex;
@@ -1317,12 +1329,21 @@ body {
       color: var(--color-text);
     }
 
-    .nav-menu .nav-language {
+    /* Language button stays in header (nav-right), left of burger */
+    .nav-right {
+      gap: var(--spacing-sm);
+    }
+
+    .nav-right .nav-language {
       min-height: 44px;
       min-width: 44px;
       justify-content: center;
-      color: var(--color-text);
-      border-color: var(--color-border);
+      color: rgba(232, 241, 255, 0.92);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-right .nav-language:hover {
+      color: var(--color-accent-2);
     }
 
     .hero-title {
